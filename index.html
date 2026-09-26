@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Prompt Generator - Realistic / Professional / Cinematic</title>
+    <title>SELFit - An Online Avatar Generator Like No Other</title>
+    <link rel="icon" type="image/png" href="selfit-3d-Logo.png">
     <style>
         :root {
             --bg-color: #0f172a;
@@ -38,12 +39,27 @@
         header {
             text-align: center;
             margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
 
         header h1 {
             font-size: 2.2rem;
             margin-bottom: 0.5rem;
             color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
         }
 
         header p {
@@ -168,8 +184,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>AI Image Prompt Generator</h1>
-            <p>5 Realistic, Professional Photo, and Cinematic Variants ready for GitHub Pages hosting</p>
+            <img src="selfit-3d-Logo.png" alt="SELFit Logo" class="logo">
+            <h1>SELFit</h1>
+            <p>An Online Avatar Generator Like No Other</p>
         </header>
 
         <div id="prompts-container"></div>
@@ -182,42 +199,42 @@
     <div id="toast" class="toast">Copied to clipboard!</div>
 
     <script>
-        const negativePrompt = `(text), low-quality, deformed, extra limbs, blurry, bad art, (logo), watermark, blurred, cut off, extra fingers, bad quality, distortion of proportions, deformed fingers, elongated body, cropped image, deformed hands, deformed legs, deformed face, twisted fingers, double image, long neck, extra limb, plastic, disfigured, mutation, sloppy, ugly, pixelated, bad hands, aliasing, overexposed, oversaturated, burnt image, fuzzy, poor quality, deformed arms, (wrong sex, wrong gender, wrong age, perfect skin, facial hair on women: 1.1), (black and white, monochrome, highly saturated, overexposure:1.1), (cropped, collage, multiple people:1.1), (famous people, models, artists, celebrities), makeup, cosmetics, denim, gore, blood, camera, deviantart, artstation, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, illustration, painting, cross eyes, have strabismus, hands`;
+        const negativePrompt = `(text), low-quality, deformed, extra limbs, blurry, bad art, (logo), watermark, blurred, cut off, extra fingers, bad quality, distortion of proportions, deformed f[...]
 
         const variants = [
             {
                 id: 1,
                 title: "Variant 1: Realistic Portrait (Natural Golden Hour)",
                 style: "Realistic Image",
-                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, portrait of a young person in natural soft golden hour sunset light, realistic skin texture with subtle pores, natural hair texture, wearing simple elegant organic linen attire",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp[...]",
                 negative: negativePrompt
             },
             {
                 id: 2,
                 title: "Variant 2: Professional Studio Photo",
                 style: "Professional Photo",
-                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, professional headshot photo, studio Rembrandt lighting, soft key light and subtle rim light, neutral blurred studio background, crisp focus on catchlights in eyes, ultra-realistic skin tone and texture",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp[...]",
                 negative: negativePrompt
             },
             {
                 id: 3,
                 title: "Variant 3: Cinematic Atmospheric Portrait",
                 style: "Cinematic",
-                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, cinematic 35mm film still, dramatic chiaroscuro illumination, subtle mist in background, moody teal and warm amber color grading, depth of field, shallow focus, intimate emotional moment",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp[...]",
                 negative: negativePrompt
             },
             {
                 id: 4,
                 title: "Variant 4: Environmental Professional Portrait",
                 style: "Professional Photo / Outdoor",
-                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, environmental portrait, 85mm lens f/1.8 bokeh, standing in an architectural courtyard, soft overcast diffuse lighting, natural skin imperfections, crisp eye reflections, high contrast micro-details",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp[...]",
                 negative: negativePrompt
             },
             {
                 id: 5,
                 title: "Variant 5: Cinematic Night Street Scene",
                 style: "Cinematic / Night",
-                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, cinematic night scene, ambient neon glow, subtle rain reflections on street, dramatic lighting casting soft shadow across face, high dynamic range, raw photo feel",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp[...]",
                 negative: negativePrompt
             }
         ];
