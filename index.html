@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Prompt Generator - Realistic / Professional / Cinematic</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --accent-hover: #0284c7;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --success-color: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .tag {
+            background-color: #0284c722;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .prompt-box {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            position: relative;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: #0f172a;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            color: #ffffff;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-copy-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--success-color);
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Image Prompt Generator</h1>
+            <p>5 Realistic, Professional Photo, and Cinematic Variants ready for GitHub Pages hosting</p>
+        </header>
+
+        <div id="prompts-container"></div>
+
+        <footer>
+            <p>Ready for deployment on GitHub Pages. Simply push to your repository branch and enable GitHub Pages in repository settings.</p>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <script>
+        const negativePrompt = `(text), low-quality, deformed, extra limbs, blurry, bad art, (logo), watermark, blurred, cut off, extra fingers, bad quality, distortion of proportions, deformed fingers, elongated body, cropped image, deformed hands, deformed legs, deformed face, twisted fingers, double image, long neck, extra limb, plastic, disfigured, mutation, sloppy, ugly, pixelated, bad hands, aliasing, overexposed, oversaturated, burnt image, fuzzy, poor quality, deformed arms, (wrong sex, wrong gender, wrong age, perfect skin, facial hair on women: 1.1), (black and white, monochrome, highly saturated, overexposure:1.1), (cropped, collage, multiple people:1.1), (famous people, models, artists, celebrities), makeup, cosmetics, denim, gore, blood, camera, deviantart, artstation, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, illustration, painting, cross eyes, have strabismus, hands`;
+
+        const variants = [
+            {
+                id: 1,
+                title: "Variant 1: Realistic Portrait (Natural Golden Hour)",
+                style: "Realistic Image",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, portrait of a young person in natural soft golden hour sunset light, realistic skin texture with subtle pores, natural hair texture, wearing simple elegant organic linen attire",
+                negative: negativePrompt
+            },
+            {
+                id: 2,
+                title: "Variant 2: Professional Studio Photo",
+                style: "Professional Photo",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, professional headshot photo, studio Rembrandt lighting, soft key light and subtle rim light, neutral blurred studio background, crisp focus on catchlights in eyes, ultra-realistic skin tone and texture",
+                negative: negativePrompt
+            },
+            {
+                id: 3,
+                title: "Variant 3: Cinematic Atmospheric Portrait",
+                style: "Cinematic",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, cinematic 35mm film still, dramatic chiaroscuro illumination, subtle mist in background, moody teal and warm amber color grading, depth of field, shallow focus, intimate emotional moment",
+                negative: negativePrompt
+            },
+            {
+                id: 4,
+                title: "Variant 4: Environmental Professional Portrait",
+                style: "Professional Photo / Outdoor",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, environmental portrait, 85mm lens f/1.8 bokeh, standing in an architectural courtyard, soft overcast diffuse lighting, natural skin imperfections, crisp eye reflections, high contrast micro-details",
+                negative: negativePrompt
+            },
+            {
+                id: 5,
+                title: "Variant 5: Cinematic Night Street Scene",
+                style: "Cinematic / Night",
+                positive: "highly realistic, realistic portrait, sfw, anatomically correct, realistic photograph, real colors, award winning photo, detailed face, realistic eyes, beautiful, sharp focus, high resolution, volumetric lighting, incredibly detailed, masterpiece, breathtaking, exquisite, great attention to skin and eyes, cinematic night scene, ambient neon glow, subtle rain reflections on street, dramatic lighting casting soft shadow across face, high dynamic range, raw photo feel",
+                negative: negativePrompt
+            }
+        ];
+
+        function showToast(message = "Copied to clipboard!") {
+            const toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2000);
+        }
+
+        function copyToClipboard(text, typeName) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`${typeName} copied!`);
+            }).catch(err => {
+                showToast("Failed to copy");
+            });
+        }
+
+        const container = document.getElementById("prompts-container");
+
+        variants.forEach(variant => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+                <div class="card-header">
+                    <span class="card-title">${variant.title}</span>
+                    <span class="tag">${variant.style}</span>
+                </div>
+                
+                <div class="section-title">Positive Prompt</div>
+                <div class="prompt-box">${variant.positive}</div>
+
+                <div class="section-title">Negative Prompt</div>
+                <div class="prompt-box">${variant.negative}</div>
+
+                <div class="btn-copy-group">
+                    <button class="btn" onclick="copyToClipboard(\`${variant.positive.replace(/`/g, '\\`')}\`, 'Positive prompt')">
+                        Copy Positive Prompt
+                    </button>
+                    <button class="btn" onclick="copyToClipboard(\`${variant.negative.replace(/`/g, '\\`')}\`, 'Negative prompt')">
+                        Copy Negative Prompt
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
